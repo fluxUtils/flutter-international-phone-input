@@ -19,6 +19,9 @@ class InternationalPhoneInput extends StatefulWidget {
   final TextStyle errorStyle;
   final TextStyle hintStyle;
   final int errorMaxLines;
+  /// areas that you are interested. if not set, all areas that existed in assets/countries.json will be listed.
+  ///see https://en.wikipedia.org/wiki/List_of_country_calling_codes
+  final List<String> areaList;
 
   InternationalPhoneInput(
       {this.onPhoneNumberChange,
@@ -28,7 +31,8 @@ class InternationalPhoneInput extends StatefulWidget {
       this.hintText,
       this.errorStyle,
       this.hintStyle,
-      this.errorMaxLines});
+      this.errorMaxLines,
+      this.areaList});
 
   static Future<String> internationalizeNumber(String number, String iso) {
     return PhoneService.getNormalizedPhoneNumber(number, iso);
@@ -121,6 +125,7 @@ class _InternationalPhoneInputState extends State<InternationalPhoneInput> {
     List<Country> elements = [];
     jsonList.forEach((s) {
       Map elem = Map.from(s);
+      if( widget.areaList == null || (widget.areaList != null && widget.areaList.contains(elem['alpha_2_code'])))
       elements.add(Country(
           name: elem['en_short_name'],
           code: elem['alpha_2_code'],
@@ -153,7 +158,7 @@ class _InternationalPhoneInputState extends State<InternationalPhoneInput> {
                     child: Container(
                       padding: const EdgeInsets.only(bottom: 5.0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Image.asset(
                             value.flagUri,

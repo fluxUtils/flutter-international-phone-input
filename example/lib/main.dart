@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:international_phone_input/international_phone_input.dart';
 import 'package:international_phone_input/international_phone_input.dart';
 
 void main() => runApp(MyApp());
@@ -56,7 +57,10 @@ class _MyHomePageState extends State<MyHomePage> {
             InternationalPhoneInput(
               onPhoneNumberChange: onPhoneNumberChange,
               initialPhoneNumber: phoneNumber,
-              initialSelection: phoneIsoCode,
+              initialSelection: '+377',
+              areaList: <String>[
+                'CN','TW','US','JP','GB','SG','MA','MC'
+              ],
             ),
             SizedBox(height: 50),
             Container(
